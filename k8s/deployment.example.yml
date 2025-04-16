@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idently
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: idently
+  template:
+    metadata:
+      labels:
+        app: idently
+    spec:
+      containers:
+        - name: idently
+          image: idently:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: users-file
+              mountPath: /app/config/users.json
+              subPath: users.json
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8000
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/ready
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: '30m'
+              memory: '32Mi'
+            limits:
+              cpu: '100m'
+              memory: '256Mi'
+      volumes:
+        - name: users-file
+          configMap:
+            name: idently-config

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom", "esnext"],
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "importMap": "import_map.json",
+  "tasks": {
+    "start": "deno run --allow-net --allow-read --allow-env --env-file server.ts",
+    "tests": "deno test --allow-env --allow-read --allow-write",
+    "cleanup": "deno fmt && deno lint"
+  },
+  "fmt": {
+    "lineWidth": 80,
+    "singleQuote": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  }
+}

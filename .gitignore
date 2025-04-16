@@ -1,0 +1,13 @@
+### dev
+dev
+.DS_Store
+
+### cicd
+cicd.sh
+
+### env
+.env
+.env.cloud
+
+### claims
+models/x-*-claim.ts

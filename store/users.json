@@ -1,0 +1,19 @@
+[
+  {
+    "code": "j8f1yIML6",
+    "firstName": "Toma",
+    "lastName": "Maier",
+    "systemRole": "admin",
+    "availableSince": "2025-04-02",
+    "specificRole": "manager",
+    "id": 127634
+  },
+  {
+    "code": "LqHissG4A",
+    "firstName": "Lisa",
+    "lastName": "Hansen",
+    "systemRole": "user",
+    "availableSince": "2025-04-09",
+    "budget": 400
+  }
+]
