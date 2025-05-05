@@ -1,0 +1,27 @@
+@port=8000
+@identlyCheckValue = 4711
+
+### get short valid JWT
+GET http://localhost:{{port}}/token/short
+Content-Type: application/json
+Idently-Custom-Check: {{identlyCheckValue}}
+Secret-Code: j8f1yIML6
+Source: test1
+
+### get long valid JWT
+GET http://localhost:{{port}}/token/long
+Content-Type: application/json
+Idently-Custom-Check: {{identlyCheckValue}}
+Secret-Code: j8f1yIML6
+Source: test1
+
+### verify JWT
+GET http://localhost:{{port}}/token/verify
+Authorization: Bearer <<PUT TOKEN HERE>>
+Idently-Custom-Check: {{identlyCheckValue}}
+Source: test1
+
+### get all users with admin JWT
+GET http://localhost:{{port}}/users
+Authorization: Bearer <<PUT TOKEN HERE>>
+Idently-Custom-Check: {{identlyCheckValue}}

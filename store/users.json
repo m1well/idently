@@ -1,0 +1,26 @@
+[
+  {
+    "code": "j8f1yIML6",
+    "firstName": "Tomas",
+    "lastName": "Maier",
+    "systemRole": "ADMIN",
+    "availableSince": "2025-04-02",
+    "assignedApps": [
+      "test1",
+      "test2"
+    ],
+    "specificRole": "manager",
+    "id": 127634
+  },
+  {
+    "code": "LqHissG4A",
+    "firstName": "Lisa",
+    "lastName": "Hansen",
+    "systemRole": "USER",
+    "availableSince": "2025-04-09",
+    "assignedApps": [
+      "test2"
+    ],
+    "budget": 400
+  }
+]

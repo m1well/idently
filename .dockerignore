@@ -1,0 +1,9 @@
+dev
+k8s
+.env.example
+.gitignore
+cicd.sh
+Dockerfile
+LICENSE
+README.md
+requests.http
