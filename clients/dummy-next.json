@@ -1,0 +1,16 @@
+{
+  "clientName": "dummy-next",
+  "users": [
+    {
+      "code": "v2KHYBicm",
+      "systemRole": "ADMIN",
+      "claims": {
+        "firstName": "Greg",
+        "lastName": "Johnson",
+        "availableSince": "2025-07-16",
+        "specificRole": "manager",
+        "irId": 127634
+      }
+    }
+  ]
+}

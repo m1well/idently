@@ -5,9 +5,10 @@ import {
   Router,
   RouterContext,
 } from '@/deps/main.ts';
-import { handleUsers } from '@/routes/user.ts';
+// import { handleUsers } from '@/routes/user.ts';
 import { handleCreateToken, handleVerifyToken } from '@/routes/token.ts';
 import log from '@/logger/main.ts';
+import { handleUsers } from './routes/user.ts';
 
 const PORT = 8000;
 const REQUIRED_CODE_HEADER = 'Secret-Code';

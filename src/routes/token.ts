@@ -1,20 +1,28 @@
 import { getNumericDate, OakRequest, Payload } from '@/deps/main.ts';
-import type { User } from '@/models/user.ts';
-import { readJson } from '@/utils/file.ts';
 import { createJWT, verifyJWT } from '@/utils/jwt.ts';
 import { jsonHeader } from '@/utils/header.ts';
+import { readJsonFiles } from '../utils/files.ts';
+import { User } from '../models/user.ts';
 
 export async function handleCreateToken(
   code: string,
   source: string,
   duration: number,
 ): Promise<Response> {
-  const users = await readJson<User[]>(Deno.env.get('USERS_FILE')!);
+  const clients: { clientName: string; users: User[] }[] = await readJsonFiles(
+    Deno.env.get('CLIENTS_FOLDER')!,
+  );
+  const client = clients.filter((c) => c.clientName === source).pop();
+
+  if (!client) {
+    return new Response(JSON.stringify({ error: 'Invalid source' }), {
+      status: 401,
+      headers: jsonHeader,
+    });
+  }
 
   // search user by id and source in 'assignedApps'
-  const user = users.find((u) =>
-    u.code === code && u.assignedApps.includes(source)
-  );
+  const user = client.users.find((u) => u.code === code);
   if (!user) {
     return new Response(JSON.stringify({ error: 'Invalid code or source' }), {
       status: 401,
@@ -24,22 +32,23 @@ export async function handleCreateToken(
 
   // deno-lint-ignore no-explicit-any
   const payload: any = {
-    sub: `${user.firstName} ${user.lastName}`,
+    sub: `${user.claims.firstName} ${user.claims.lastName}`,
     role: user.systemRole,
     iss: Deno.env.get('APP_NAME')!,
     aud: source,
     iat: getNumericDate(0),
     exp: getNumericDate(duration),
-    specificRole: user.specificRole,
-    id: user.id,
-    budget: user.budget,
+    ...user.claims,
   };
 
   const jwt = await createJWT(payload as unknown as Payload);
 
-  return new Response(JSON.stringify({ token: jwt, name: user.firstName }), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return new Response(
+    JSON.stringify({ token: jwt, name: user.claims.firstName }),
+    {
+      headers: { 'Content-Type': 'application/json' },
+    },
+  );
 }
 
 export async function handleVerifyToken(

@@ -1,0 +1,26 @@
+{
+  "clientName": "dummy",
+  "users": [
+    {
+      "code": "j8f1yIML6",
+      "systemRole": "ADMIN",
+      "claims": {
+        "firstName": "Tomas",
+        "lastName": "Maier",
+        "availableSince": "2025-04-02",
+        "specificRole": "manager",
+        "irId": 127634
+      }
+    },
+    {
+      "code": "LqHissG4A",
+      "systemRole": "USER",
+      "claims": {
+        "firstName": "Lisa",
+        "lastName": "Hansen",
+        "availableSince": "2025-04-09",
+        "specificRole": "driver"
+      }
+    }
+  ]
+}

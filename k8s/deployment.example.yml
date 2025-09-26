@@ -21,8 +21,8 @@ spec:
             - containerPort: 8000
           volumeMounts:
             - name: users-file
-              mountPath: /app/config/users.json
-              subPath: users.json
+              mountPath: /app/config/dummy.json
+              subPath: dummy.json
           livenessProbe:
             httpGet:
               path: /actuator/health

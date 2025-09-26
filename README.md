@@ -7,9 +7,10 @@ user store.
 admin panels, or APIs:
 
 - login via secret code (no email, no passwords)
-- flat file `store/users.json` user store
+- flat files to store users in mutliple clients - e.g.
+  [clients/dummy.json](client/dummy.json)
 - generates short and long valid JWTs and verifies them
-- additional endpoint to get all users as an admin
+- additional endpoint to get all users for a client admin
 
 ## why?
 
@@ -23,7 +24,7 @@ and a JWT.
 - `GET /token/short` – login with code & source in header, get a short valid JWT
 - `GET /token/long` – login with code & source in header, get a long valid JWT
 - `GET /token/verify` – verify JWT (with source header!) & return claims
-- `GET /users` – return user data if you have an admin JWT
+- `GET /users` – return data of all users but only for a client's admin
 - configurable `JWT_SECRET`
 - configurable additional header `REQUIRED_HEADER`
 - configurable value for additional header `EXPECTED_HEADER_VALUE`
@@ -69,13 +70,9 @@ deno task format
 
 ## customization
 
-### own user properties
+### customs claims
 
-- just add more optional properties to the user type
-
-### additional claims
-
-- add the mapping to the claims (only propertys you need in the jwt claim!)
+- just add your custom claims in the the user's `claims` object
 
 ## Docker
 

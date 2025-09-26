@@ -1,13 +1,10 @@
 export type User = {
   code: string;
-  firstName: string;
-  lastName: string;
   systemRole: string;
-  availableSince: Date;
-  assignedApps: string[];
-  specificRole?: string;
-  id?: number;
-  budget?: number;
+  claims: {
+    firstName?: string;
+    lastName?: string;
+    // deno-lint-ignore no-explicit-any
+    [key: string]: any; // allows additional properties
+  };
 };
-
-export type UserDto = Omit<User, 'code' | 'assignedApps'>;

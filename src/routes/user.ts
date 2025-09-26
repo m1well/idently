@@ -1,13 +1,12 @@
 import { OakRequest } from '@/deps/main.ts';
-import type { User } from '@/models/user.ts';
-import { readJson } from '@/utils/file.ts';
 import { verifyJWT } from '@/utils/jwt.ts';
-import { createUserDto } from '@/utils/mapping.ts';
 import { jsonHeader } from '@/utils/header.ts';
+import { readJsonFiles } from '../utils/files.ts';
 
 export async function handleUsers(req: OakRequest): Promise<Response> {
-  const users = createUserDto(
-    await readJson<User[]>(Deno.env.get('USERS_FILE')!),
+  // deno-lint-ignore no-explicit-any
+  const clients: { clientName: string; users: any[] }[] = await readJsonFiles(
+    Deno.env.get('CLIENTS_FOLDER')!,
   );
 
   const auth = req.headers.get('authorization') ?? '';
@@ -24,14 +23,21 @@ export async function handleUsers(req: OakRequest): Promise<Response> {
     );
   }
 
-  if (users.length == 0) {
-    return new Response(JSON.stringify({ error: 'No users found' }), {
+  if (clients.length == 0) {
+    return new Response(JSON.stringify({ error: 'No clients found' }), {
       status: 404,
       headers: jsonHeader,
     });
   }
 
-  return new Response(JSON.stringify(users), {
-    headers: jsonHeader,
-  });
+  return new Response(
+    JSON.stringify(
+      clients
+        .filter((c) => c.clientName === payload?.aud)
+        .map((c) => c.users),
+    ),
+    {
+      headers: jsonHeader,
+    },
+  );
 }
